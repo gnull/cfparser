@@ -1,11 +1,14 @@
+(defun cf-get-csrf-token(page)
+  (string-match "name='csrf_token' +value='\\([^\']+\\)'" page)
+  (match-string 1 page))
+
 (defun cf-login (uname psswd remember)
   (setq cf-response 
 	(shell-command-to-string
 	 (format "curl --silent --cookie-jar %s '%s://%s/enter'"
 		 cf-cookies-file
 		 cf-proto cf-host)))
-  (string-match "name='csrf_token' +value='\\([^\']+\\)'" cf-response)
-  (setq cf-csrf-token (match-string 1 cf-response))
+  (setq cf-csrf-token (cf-get-csrf-token cf-response))
   (setq cf-response
 	(shell-command-to-string 
 	 (format "curl --location --silent --cookie-jar %s --data 'action=enter&handle=%s&password=%s&remember=%s&csrf_token=%s' '%s://%s/enter'"
