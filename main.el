@@ -37,7 +37,7 @@
 	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=1' -F 'source=%s' '%s://%s/contest/%s/submit?csrf_token=%s'"
 	  cf-cookies-file cf-cookies-file
 	  cf-csrf-token
-	  problem (url-hexify-string solution)
+	  problem solution
 	  cf-proto cf-host contest cf-csrf-token
 	  ))))
 
