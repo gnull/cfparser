@@ -49,5 +49,6 @@
      (cf-login cf-uname cf-psswd cf-remember))))
 
 (defun cf-logout ()
-  (delete-file cf-cookies-file))
+  (when (file-exists-p cf-cookies-file)
+    (delete-file cf-cookies-file)))
 
