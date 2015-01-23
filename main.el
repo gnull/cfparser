@@ -1,3 +1,7 @@
+(setq cf-host "codeforces.ru")
+(setq cf-proto "http")
+(setq cf-cookies-file "~/.cf-cookies")
+
 (defun cf-get-csrf-token(page)
   (string-match "name='csrf_token' +value='\\([^\']+\\)'" page)
   (match-string 1 page))
@@ -47,10 +51,3 @@
 (defun cf-logout ()
   (delete-file cf-cookies-file))
 
-(progn
-  (setq cf-host "codeforces.ru")
-  (setq cf-proto "http")
-  (setq cf-cookies-file "~/.cf-cookies")
-  (cf-logout)
-  (cf-login-read)
-  (cf-submit "505" "A" "submit.cc"))
