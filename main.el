@@ -1,3 +1,6 @@
+(load-file "languages.el")
+
+(setq cf-default-language cf-pl-g++)
 (setq cf-host "codeforces.ru")
 (setq cf-proto "http")
 (setq cf-cookies-file "~/.cf-cookies")
@@ -34,10 +37,11 @@
   (setq cf-response
 	(shell-command-to-string
 	 (format
-	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=1' -F 'source=%s' '%s://%s/contest/%s/submit?csrf_token=%s'"
+	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F 'source=%s' '%s://%s/contest/%s/submit?csrf_token=%s'"
 	  cf-cookies-file cf-cookies-file
 	  cf-csrf-token
-	  problem solution
+	  problem
+	  cf-default-language solution
 	  cf-proto cf-host contest cf-csrf-token
 	  ))))
 
