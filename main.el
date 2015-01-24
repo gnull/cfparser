@@ -9,6 +9,16 @@
   (string-match "name='csrf_token' +value='\\([^\']+\\)'" page)
   (match-string 1 page))
 
+(defun cf-logged-in-as ()
+  (setq cf-response
+	(shell-command-to-string
+	 (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/' "
+		 cf-cookies-file cf-cookies-file
+		 cf-proto cf-host)))
+  (when (string-match "<a href=\"/[a-z0-9]*/logout\">" cf-response)
+    (string-match "<a href=\"/profile/\\([^\"]*\\)\">" cf-response)
+    (match-string 1 cf-response)))
+
 (defun cf-login (uname psswd remember)
   (setq cf-response
 	(shell-command-to-string
