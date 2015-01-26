@@ -37,7 +37,7 @@
       'nil
     't))
 
-(defun cf-submit(contest problem solution)
+(defun cf-submit(contest problem solution language)
   (setq cf-csrf-token
 	(cf-get-csrf-token
 	 (shell-command-to-string
@@ -51,7 +51,7 @@
 	  cf-cookies-file cf-cookies-file
 	  cf-csrf-token
 	  problem
-	  cf-default-language solution
+	  language solution
 	  cf-proto cf-host contest cf-csrf-token
 	  ))))
 
