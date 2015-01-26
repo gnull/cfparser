@@ -55,13 +55,6 @@
 	  cf-proto cf-host contest cf-csrf-token
 	  ))))
 
-(defun cf-login-read() 
-  (let ((cf-uname (read-string "usename: "))
-	(cf-psswd (read-passwd "password: "))
-	(cf-remember (if (y-or-n-p "remember? ") '"on" '"")))
-    (message 
-     (cf-login cf-uname cf-psswd cf-remember))))
-
 (defun cf-logout ()
   (when (file-exists-p cf-cookies-file)
     (delete-file cf-cookies-file)))
