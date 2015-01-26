@@ -34,8 +34,8 @@
 		 cf-proto cf-host))
 	)
   (if (string-match "\"error for__password\"" cf-response)
-      '"login: fail [wrong password?]"
-    '"login: ok"))
+      'nil
+    't))
 
 (defun cf-submit(contest problem solution)
   (setq cf-csrf-token
