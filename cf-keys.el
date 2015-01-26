@@ -1,4 +1,4 @@
-(load-file "main.el")
+(load "cf-main.el")
 
 (defun cf-login-i()
   (interactive)

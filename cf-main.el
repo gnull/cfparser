@@ -1,4 +1,4 @@
-(load-file "languages.el")
+(load "cf-languages.el")
 
 (setq cf-default-language cf-pl-g++)
 (setq cf-host "codeforces.ru")
