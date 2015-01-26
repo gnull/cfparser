@@ -55,6 +55,30 @@
 	  cf-proto cf-host contest cf-csrf-token
 	  ))))
 
+(defun cf-parse-tests(page)
+  (let ((input_regex  "<div class=\"input\">.*?<pre>\\(.*?\\)</pre></div>")
+	(output_regex "<div class=\"output\">.*?<pre>\\(.*?\\)</pre></div>")
+	(from 0)
+	(input "")
+	(output "")
+	(result '()))
+    (while (setq from (string-match input_regex page from))
+      (setq input (match-string 1 page))
+      (setq from (string-match output_regex page from))
+      (setq output (match-string 1 page))
+      (setq input (replace-regexp-in-string "<br[^>]*?>" "\n" input))
+      (setq output (replace-regexp-in-string "<br[^>]*?>" "\n" output))
+      (push (list input output) result))
+    result))
+
+(defun cf-get-tests(contest problem)
+  (setq cf-response
+	(shell-command-to-string
+	 (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/contest/%s/problem/%s'"
+		 cf-cookies-file cf-cookies-file
+		 cf-proto cf-host contest problem)))
+  (cf-parse-tests cf-response))
+
 (defun cf-logout ()
   (when (file-exists-p cf-cookies-file)
     (delete-file cf-cookies-file)))
