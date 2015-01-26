@@ -22,7 +22,7 @@
 (defun cf-submit-current-buffer-by-path-i()
   (interactive)
   (unless (cf-logged-in-as)
-    (cf-login-query))
+    (cf-login-i))
   (let (contest problem extension language path)
     (setq path (buffer-file-name))
     (if (string-match "/\\([0-9]+\\)/?\\([a-zA-Z0-9]\\)\\(\.[^.]+\\)$" path)
