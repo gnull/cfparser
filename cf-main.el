@@ -38,6 +38,7 @@
     't))
 
 (defun cf-submit(contest problem solution language)
+  (setq solution (replace-regexp-in-string "\"" "\\\"" solution nil t))
   (setq cf-csrf-token
 	(cf-get-csrf-token
 	 (shell-command-to-string
@@ -47,7 +48,7 @@
   (setq cf-response
 	(shell-command-to-string
 	 (format
-	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F 'source=%s' '%s://%s/contest/%s/submit?csrf_token=%s'"
+	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F \"source=%s\" '%s://%s/contest/%s/submit?csrf_token=%s'"
 	  cf-cookies-file cf-cookies-file
 	  cf-csrf-token
 	  problem
