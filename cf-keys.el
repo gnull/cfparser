@@ -19,13 +19,14 @@
   (interactive)
   (message (format "logged in as %s" (cf-logged-in-as))))
 
+(setq cf-path-regexp "/\\([0-9]+\\)/?\\([a-zA-Z]\\)/?[^/.]*\\(\.[^.]+\\)$")
 (defun cf-submit-current-buffer-by-path-i()
   (interactive)
   (unless (cf-logged-in-as)
     (cf-login-i))
   (let (contest problem extension language path)
     (setq path (buffer-file-name))
-    (if (string-match "/\\([0-9]+\\)/?\\([a-zA-Z]\\)/?[^/.]*\\(\.[^.]+\\)$" path)
+    (if (string-match cf-path-regexp path)
 	(progn
 	  (setq contest (match-string 1 path))
 	  (setq problem (match-string 2 path))
