@@ -47,8 +47,32 @@
 	     '"submit: fail")))
       (message "submit: file name not recognized"))))
 
+(defun cf-download-tests-i() 
+  (interactive)
+  (let (tests input output contest problem path i)
+    (setq path (buffer-file-name))
+    (if (string-match cf-path-regexp path)
+	(progn
+	  (setq contest (match-string 1 path))
+	  (setq problem (match-string 2 path))
+	  (message (format "downloading tests for %s/%s..." contest problem))
+	  (setq tests (cf-get-tests contest problem))
+	  (setq i 0)
+	  (dolist (test tests)
+	    (setq input (car test))
+	    (setq output (cadr test))
+	    (with-temp-buffer
+	      (insert input)
+	      (write-region (point-min) (point-max) (format "%d.in" i))
+	      (erase-buffer)
+	      (insert output)
+	      (write-region (point-min) (point-max) (format "%d.out" i)))
+	    (setq i (+ 1 i)))
+	  (message (format "downloaded %d tests" i)))
+      (message "download: file name not recognized"))))
+
 (global-set-key (kbd "C-c s") 'cf-submit-current-buffer-by-path-i)
 (global-set-key (kbd "C-c i") 'cf-login-i)
 (global-set-key (kbd "C-c o") 'cf-logout-i)
 (global-set-key (kbd "C-c w") 'cf-whoami-i)
-
+(global-set-key (kbd "C-c d") 'cf-download-tests-i)
