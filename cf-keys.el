@@ -41,7 +41,7 @@
 		 ;; and so on..
 		 (t cf-default-language)))
 	  (message
-	   (if (cf-submit contest problem (buffer-string) language)
+	   (if (cf-submit contest problem (buffer-substring-no-properties (buffer-end -1) (buffer-end 1)) language)
 	       (format "submit: ok [by %s to %s/%s]" (cf-logged-in-as) contest problem)
 	     '"submit: fail")))
       (message "submit: file name not recognized"))))
