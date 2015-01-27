@@ -25,7 +25,7 @@
     (cf-login-i))
   (let (contest problem extension language path)
     (setq path (buffer-file-name))
-    (if (string-match "/\\([0-9]+\\)/?\\([a-zA-Z0-9]\\)\\(\.[^.]+\\)$" path)
+    (if (string-match "/\\([0-9]+\\)/?\\([a-zA-Z]\\)/?[^/.]*\\(\.[^.]+\\)$" path)
 	(progn
 	  (setq contest (match-string 1 path))
 	  (setq problem (match-string 2 path))
