@@ -1,6 +1,7 @@
 (load "cf-main.el")
 
 (defun cf-login-i()
+  "Login to Codeforces using handle/password."
   (interactive)
   (let ((cf-uname (read-string "usename: "))
 	(cf-psswd (read-passwd "password: "))
@@ -11,16 +12,19 @@
        '"login: fail"))))
 
 (defun cf-logout-i()
+  "Logout from Codeforces."
   (interactive)
   (cf-logout)
   (message "logout: ok"))
 
 (defun cf-whoami-i()
+  "Print handle."
   (interactive)
   (message (format "logged in as %s" (cf-logged-in-as))))
 
 (setq cf-path-regexp "/\\([0-9]+\\)/?\\([a-zA-Z]\\)/?[^/.]*\\(\.[^.]+\\)$")
 (defun cf-submit-current-buffer-by-path-i()
+  "Submit contents of the buffer."
   (interactive)
   (unless (cf-logged-in-as)
     (cf-login-i))
@@ -48,6 +52,7 @@
       (message "submit: file name not recognized"))))
 
 (defun cf-download-tests-i() 
+  "Save sample tests to the current directory. 0.in, 0.ans, 1.in ..."
   (interactive)
   (let (tests input output contest problem path i)
     (setq path (buffer-file-name))
