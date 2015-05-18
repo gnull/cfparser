@@ -1,7 +1,7 @@
 (load "cf-languages.el")
 
 (setq cf-default-language cf-pl-g++)
-(setq cf-host "codeforces.ru")
+(setq cf-host "codeforces.com")
 (setq cf-proto "http")
 (setq cf-cookies-file "~/.cf-cookies")
 
