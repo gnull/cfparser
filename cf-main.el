@@ -45,14 +45,18 @@
 	  (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/contest/%s/submit'"
 		  cf-cookies-file cf-cookies-file
 		  cf-proto cf-host contest))))
+
+  (setq temp-file (make-temp-file "cfparser"))
+  (with-temp-file temp-file (insert solution))
+
   (setq cf-response
 	(shell-command-to-string
 	 (format
-	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F \"source=%s\" '%s://%s/contest/%s/submit?csrf_token=%s'"
+	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F \"source=@%s\" '%s://%s/contest/%s/submit?csrf_token=%s'"
 	  cf-cookies-file cf-cookies-file
 	  cf-csrf-token
 	  problem
-	  language solution
+	  language temp-file
 	  cf-proto cf-host contest cf-csrf-token
 	  ))))
 
