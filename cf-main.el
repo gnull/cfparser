@@ -38,7 +38,6 @@
     't))
 
 (defun cf-submit(contest problem solution language)
-  (setq solution (replace-regexp-in-string "\"" "\\\"" solution nil t))
   (setq cf-csrf-token
 	(cf-get-csrf-token
 	 (shell-command-to-string
