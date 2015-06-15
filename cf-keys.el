@@ -35,16 +35,9 @@
 	  (setq contest (match-string 1 path))
 	  (setq problem (match-string 2 path))
 	  (setq extension (match-string 3 path))
-	  (setq language
-		(cond
-		 ((string= extension ".cpp") cf-pl-g++)
-		 ((string= extension ".cc") cf-pl-g++)
-		 ((string= extension ".c") cf-pl-gcc)
-		 ((string= extension ".pas") cf-pl-fpc)
-		 ((string= extension ".php") cf-pl-php)
-		 ((string= extension ".java") cf-pl-java-7)
-		 ;; and so on..
-		 (t cf-default-language)))
+	  (setq language (gethash extension cf-pl-by-ext))
+	  (unless language 
+	    (setq language cf-default-language))
 	  (message
 	   (if (cf-submit contest problem (buffer-substring-no-properties (buffer-end -1) (buffer-end 1)) language)
 	       (format "submit: ok [by %s to %s/%s]" (cf-logged-in-as) contest problem)

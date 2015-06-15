@@ -15,6 +15,14 @@
 (setq cf-pl-scala "20")
 (setq cf-pl-js "34")
 
+(setq cf-pl-by-ext (make-hash-table :test 'equal))
+(puthash ".cpp" cf-pl-g++ cf-pl-by-ext)
+(puthash ".cc" cf-pl-g++ cf-pl-by-ext)
+(puthash ".c" cf-pl-gcc cf-pl-by-ext)
+(puthash ".pas" cf-pl-fpc cf-pl-by-ext)
+(puthash ".php" cf-pl-php cf-pl-by-ext)
+(puthash ".java" cf-pl-java-7 cf-pl-by-ext)
+
 ;; <select name="programTypeId"">
 ;;   <option value="10">GNU GCC 4.9.2</option>
 ;;   <option value="1">GNU G++ 4.9.2</option>
