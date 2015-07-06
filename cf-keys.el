@@ -69,8 +69,15 @@
 	  (message (format "downloaded %d tests" i)))
       (message "download: file name not recognized"))))
 
-(global-set-key (kbd "C-c s") 'cf-submit-current-buffer-by-path-i)
-(global-set-key (kbd "C-c i") 'cf-login-i)
-(global-set-key (kbd "C-c o") 'cf-logout-i)
-(global-set-key (kbd "C-c w") 'cf-whoami-i)
-(global-set-key (kbd "C-c d") 'cf-download-tests-i)
+(define-minor-mode cf-mode
+  "Minor mode of codeforces parser"
+  :lighter " Codeforces"
+  :keymap (list
+	   (cons (kbd "C-c w") 'cf-whoami-i)
+	   (cons (kbd "C-c s") 'cf-submit-current-buffer-by-path-i)
+	   (cons (kbd "C-c i") 'cf-login-i)
+	   (cons (kbd "C-c o") 'cf-logout-i)
+	   (cons (kbd "C-c w") 'cf-whoami-i)
+	   (cons (kbd "C-c d") 'cf-download-tests-i)))
+
+(provide 'cf-mode)
