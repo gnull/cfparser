@@ -80,6 +80,4 @@
 	   (cons (kbd "C-c c w") 'cf-whoami-i)
 	   (cons (kbd "C-c c d") 'cf-download-tests-i)))
 
-(add-hook 'find-file-hook 'cf-mode)
-
 (provide 'cf-mode)
