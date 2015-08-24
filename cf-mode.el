@@ -73,12 +73,12 @@
   "Minor mode of codeforces parser"
   :lighter " Codeforces"
   :keymap (list
-	   (cons (kbd "C-c w") 'cf-whoami-i)
-	   (cons (kbd "C-c s") 'cf-submit-current-buffer-by-path-i)
-	   (cons (kbd "C-c i") 'cf-login-i)
-	   (cons (kbd "C-c o") 'cf-logout-i)
-	   (cons (kbd "C-c w") 'cf-whoami-i)
-	   (cons (kbd "C-c d") 'cf-download-tests-i)))
+	   (cons (kbd "C-c c w") 'cf-whoami-i)
+	   (cons (kbd "C-c c s") 'cf-submit-current-buffer-by-path-i)
+	   (cons (kbd "C-c c i") 'cf-login-i)
+	   (cons (kbd "C-c c o") 'cf-logout-i)
+	   (cons (kbd "C-c c w") 'cf-whoami-i)
+	   (cons (kbd "C-c c d") 'cf-download-tests-i)))
 
 (add-hook 'find-file-hook 'cf-mode)
 
