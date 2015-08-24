@@ -78,6 +78,15 @@
 	   (cons (kbd "C-c c i") 'cf-login-i)
 	   (cons (kbd "C-c c o") 'cf-logout-i)
 	   (cons (kbd "C-c c w") 'cf-whoami-i)
+	   (cons (kbd "C-c c t") 'cf-test-all-i)
 	   (cons (kbd "C-c c d") 'cf-download-tests-i)))
+
+(setq cf-test-command nil)
+(defun cf-test-all-i()
+  (interactive)
+  (compile
+   (if cf-test-command
+       cf-test-command
+     "make")))
 
 (provide 'cf-mode)
