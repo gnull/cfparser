@@ -84,9 +84,8 @@
 (setq cf-test-command nil)
 (defun cf-test-all-i()
   (interactive)
-  (compile
-   (if cf-test-command
-       cf-test-command
-     "make")))
+  (if cf-test-command
+      (compile cf-test-command)
+    (message "Please set cf-test-command")))
 
 (provide 'cf-mode)
