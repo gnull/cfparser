@@ -79,7 +79,8 @@
 	   (cons (kbd "C-c c o") 'cf-logout-i)
 	   (cons (kbd "C-c c w") 'cf-whoami-i)
 	   (cons (kbd "C-c c t") 'cf-test-all-i)
-	   (cons (kbd "C-c c d") 'cf-download-tests-i)))
+       (cons (kbd "C-c c d") 'cf-download-tests-i)
+       (cons (kbd "C-c c l") 'cf-last-submissions-i))
 
 (setq cf-test-command nil)
 (defun cf-test-all-i()
@@ -88,4 +89,20 @@
       (compile cf-test-command)
     (message "Please set cf-test-command")))
 
+(defun cf-last-submissions-i()
+  (interactive)
+  (with-output-to-temp-buffer "*cf-lastsubmissions*"
+    (setq v (cf-submission-vector (cf-logged-in-as)))
+    (dotimes (i (length v))
+      (setq subinfo (elt v i))
+      (setq probinfo (cdr (assoc '"problem" subinfo)))
+        (princ (format "%d%s - %s - %s - Last Test: %d - %dkB - %dms - %d pts\n"
+                        (cdr (assoc '"contestId" probinfo))
+                        (cdr (assoc '"index" probinfo))
+                        (cdr (assoc '"name" probinfo))
+                        (cdr (assoc '"verdict" subinfo))
+                        (cdr (assoc '"passedTestCount" subinfo))
+                        (/ (cdr (assoc '"memoryConsumedBytes" subinfo)) 1000)
+                        (cdr (assoc '"timeConsumedMillis" subinfo))
+                        (cdr (assoc '"points" probinfo)))))))
 (provide 'cf-mode)

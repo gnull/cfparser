@@ -11,61 +11,61 @@
 
 (defun cf-logged-in-as ()
   (setq cf-response
-	(shell-command-to-string
-	 (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/' "
-		 cf-cookies-file cf-cookies-file
-		 cf-proto cf-host)))
+    (shell-command-to-string
+     (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/' "
+         cf-cookies-file cf-cookies-file
+         cf-proto cf-host)))
   (when (string-match "<a href=\"/[a-z0-9]*/logout\">" cf-response)
     (string-match "<a href=\"/profile/\\([^\"]*\\)\">" cf-response)
     (match-string 1 cf-response)))
 
 (defun cf-login (uname psswd remember)
   (setq cf-response
-	(shell-command-to-string
-	 (format "curl --silent --cookie-jar %s '%s://%s/enter'"
-		 cf-cookies-file
-		 cf-proto cf-host)))
+    (shell-command-to-string
+     (format "curl --silent --cookie-jar %s '%s://%s/enter'"
+         cf-cookies-file
+         cf-proto cf-host)))
   (setq cf-csrf-token (cf-get-csrf-token cf-response))
   (setq cf-response
-	(shell-command-to-string
-	 (format "curl --location --silent --cookie-jar %s --cookie %s --data 'action=enter&handle=%s&password=%s&remember=%s&csrf_token=%s' '%s://%s/enter'"
-		 cf-cookies-file cf-cookies-file
-		 uname psswd remember cf-csrf-token
-		 cf-proto cf-host))
-	)
+    (shell-command-to-string
+     (format "curl --location --silent --cookie-jar %s --cookie %s --data 'action=enter&handle=%s&password=%s&remember=%s&csrf_token=%s' '%s://%s/enter'"
+         cf-cookies-file cf-cookies-file
+         uname psswd remember cf-csrf-token
+         cf-proto cf-host))
+    )
   (if (string-match "\"error for__password\"" cf-response)
       'nil
     't))
 
 (defun cf-submit(contest problem solution language)
   (setq cf-csrf-token
-	(cf-get-csrf-token
-	 (shell-command-to-string
-	  (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/contest/%s/submit'"
-		  cf-cookies-file cf-cookies-file
-		  cf-proto cf-host contest))))
+    (cf-get-csrf-token
+     (shell-command-to-string
+      (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/contest/%s/submit'"
+          cf-cookies-file cf-cookies-file
+          cf-proto cf-host contest))))
 
   (setq temp-file (make-temp-file "cfparser"))
   (with-temp-file temp-file (insert solution))
 
   (setq cf-response
-	(shell-command-to-string
-	 (format
-	  "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F \"source=@%s\" '%s://%s/contest/%s/submit?csrf_token=%s'"
-	  cf-cookies-file cf-cookies-file
-	  cf-csrf-token
-	  problem
-	  language temp-file
-	  cf-proto cf-host contest cf-csrf-token
-	  ))))
+    (shell-command-to-string
+     (format
+      "curl --location --silent --cookie-jar %s --cookie %s -F 'csrf_token=%s' -F 'action=submitSolutionFormSubmitted' -F 'submittedProblemIndex=%s' -F 'programTypeId=%s' -F \"source=@%s\" '%s://%s/contest/%s/submit?csrf_token=%s'"
+      cf-cookies-file cf-cookies-file
+      cf-csrf-token
+      problem
+      language temp-file
+      cf-proto cf-host contest cf-csrf-token
+      ))))
 
 (defun cf-parse-tests(page)
   (let ((input_regex  "<div class=\"input\">.*?<pre>\\(.*?\\)</pre></div>")
-	(output_regex "<div class=\"output\">.*?<pre>\\(.*?\\)</pre></div>")
-	(from 0)
-	(input "")
-	(output "")
-	(result '()))
+    (output_regex "<div class=\"output\">.*?<pre>\\(.*?\\)</pre></div>")
+    (from 0)
+    (input "")
+    (output "")
+    (result '()))
     (while (setq from (string-match input_regex page from))
       (setq input (match-string 1 page))
       (setq from (string-match output_regex page from))
@@ -77,13 +77,25 @@
 
 (defun cf-get-tests(contest problem)
   (setq cf-response
-	(shell-command-to-string
-	 (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/contest/%s/problem/%s'"
-		 cf-cookies-file cf-cookies-file
-		 cf-proto cf-host contest problem)))
+    (shell-command-to-string
+     (format "curl --silent --cookie-jar %s --cookie %s '%s://%s/contest/%s/problem/%s'"
+         cf-cookies-file cf-cookies-file
+         cf-proto cf-host contest problem)))
   (cf-parse-tests cf-response))
 
 (defun cf-logout ()
   (when (file-exists-p cf-cookies-file)
     (delete-file cf-cookies-file)))
 
+(defun cf-submission-vector (handle)
+  (setq cf-response
+    (shell-command-to-string
+     (format
+      "curl --location --silent '%s://%s/api/user.status?handle=%s&from=1&count=5'"
+      cf-proto cf-host handle)))
+
+  (setq json-response
+        (let ((json-key-type 'string))
+          (json-read-from-string cf-response)))
+
+  (cdr (assoc '"result" json-response)))

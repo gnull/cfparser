@@ -37,6 +37,7 @@ Yet another codeforces parser
 - `C-c c o` - Log out
 - `C-c c d` - Download sample tests to current folder (0.in, 0.ans, 1.in ...)
 - `C-c c t` - Execute `cf-test-command`
+- `C-c c l` - Show most recent submissions
 
 Submit and save functions "guess" the contest number, problem index and the programming language by the current file name in one of the following forms:
 - `directory/505/A/myfile.cpp`
