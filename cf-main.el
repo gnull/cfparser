@@ -1,4 +1,5 @@
 (load "cf-languages.el")
+(require 'json)
 
 (setq cf-default-language cf-pl-g++)
 (setq cf-host "codeforces.com")
