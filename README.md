@@ -31,13 +31,13 @@ Yet another codeforces parser
 
   In file `cf-languages.el` you can adjust extension-to-language mappings.
 ## Using
-- `C-c c w` - Get current handle
-- `C-c c s` - Submit currently open file
-- `C-c c i` - Log in
-- `C-c c o` - Log out
-- `C-c c d` - Download sample tests to current folder (0.in, 0.ans, 1.in ...)
-- `C-c c t` - Execute `cf-test-command`
-- `C-c c l` - Show most recent submissions
+- `C-c c w` - **W**ho am I
+- `C-c c s` - **S**ubmit currently open file
+- `C-c c i` - Log **I**n
+- `C-c c o` - Log **O**ut
+- `C-c c d` - **D**ownload sample tests to current folder (0.in, 0.ans, 1.in ...)
+- `C-c c t` - Execute `cf-`**t**`est-command`
+- `C-c c l` - **L**ist most recent submissions
 
 Submit and save functions "guess" the contest number, problem index and the programming language by the current file name in one of the following forms:
 - `directory/505/A/myfile.cpp`
