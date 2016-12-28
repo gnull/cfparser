@@ -43,3 +43,7 @@ Submit and save functions "guess" the contest number, problem index and the prog
 - `directory/505/A/myfile.cpp`
 - `directory/505/a.c`
 - `directory/505a.cc`
+
+## See also
+
+ - [gabrielsimoes/cfparser.vim](https://github.com/gabrielsimoes/cfparser.vim) -- Similar plugin for *Vim*. It has more features than this one (e.g it can display a problem statement).
