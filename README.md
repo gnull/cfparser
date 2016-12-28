@@ -31,7 +31,7 @@ Emacs plugin for participating in http://codeforces.com programming competitions
 ```
 
   In file `cf-languages.el` you can adjust extension-to-language mappings.
-## Using
+## Usage
 - `C-c c w` - **W**ho am I
 - `C-c c s` - **S**ubmit currently open file
 - `C-c c i` - Log **I**n
