@@ -1,5 +1,6 @@
 # cfparser
-Yet another codeforces parser
+
+Emacs plugin for participating in http://codeforces.com programming competitions.
 
 ## Installation
 - Install `curl`
