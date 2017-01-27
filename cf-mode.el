@@ -9,7 +9,7 @@
     (message
      (if (cf-login cf-uname cf-psswd cf-remember)
          '"login: ok"
-       '"login: fail"))))
+         '"login: fail"))))
 
 (defun cf-logout-i()
   "Logout from Codeforces."
@@ -41,7 +41,7 @@
           (message
            (if (cf-submit contest problem (buffer-substring-no-properties (buffer-end -1) (buffer-end 1)) language)
                (format "submit: ok [by %s to %s/%s]" (cf-logged-in-as) contest problem)
-             '"submit: fail")))
+               '"submit: fail")))
       (message "submit: file name not recognized"))))
 
 (defun cf-download-tests-i() 
